@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html>
+	
+	<head>
+		<title>Random Quote Machine</title>
+	<link href="style.css" rel="stylesheet">
+	<link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	</head>
+	
+<body>
+	<h1>Random Quote Machine</h1>
+	
+	<div id="demo">
+		<blockquote id="quoteContainer">&#34;Click the button to get  a quote&#34;</blockquote>
+		<blockquote id="author-container"></blockquote>
+		
+		<button  class = "fa fa-quote-left" onclick="createJSONP()"></button>
+		
+		
+		<a id="t-link" href="https://twitter.com/intent/tweet?text=Click%20the%20button%20to%20get%20a%20quote"
+		   target ="_blank"><i class="fa fa-twitter-square" style="font-size:15px"> Tweet</i></a>
+		
+		
+		<script src="jQuery-3.1.1.js"></script>
+		
+		
+	
+			<script type="text/javascript">
+				
+			function parseQuote(response) {
+					console.log(response);
+				console.log(response.quoteText);
+				
+				
+				var quote = document.getElementById("quoteContainer");
+				var lblE = document.getElementById("author-container");
+				
+				var twitterLink = document.getElementById("t-link")
+				var att = twitterLink.getAttributeNode("href");
+att.value = 'https://twitter.com/intent/tweet?text=' + '"' + response.quoteText + '"' + ' - '  + response.quoteAuthor;
+				
+				console.log(twitterLink);
+				console.log(att.value);
+				
+				quote.innerHTML = "&#34;" + response.quoteText + "&#34;";
+				
+				lblE.innerHTML = " -" + response.quoteAuthor;
+				
+				}
+			</script>
+			
+			<script>
+				function createJSONP() {
+					
+					var btn = document.querySelector("div > button");
+					console.log("element is " + btn);
+					
+					
+					
+					var s = document.createElement("script");
+					s.src = "http://api.forismatic.com/api/1.0/?method=getQuote&format=jsonp&jsonp=parseQuote&lang=en";
+					
+					var scr = document.scripts;
+					console.log(scr);
+					
+					document.body.appendChild(s);
+					console.log(document.body);
+					s.parentNode.removeChild(s);
+					
+				}
+				
+			</script>
+			
+			
+		
+		
+	
+	</body>
+	
+</html>
