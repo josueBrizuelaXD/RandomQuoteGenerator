@@ -1,16 +1,23 @@
+/*style.css*/
+
 body {
 	background: black;
 	color: azure;
 }
 
+
 blockquote {
 	font-size: 30px;
 	font-style: italic;
-
+    text-align: center;
+	margin-top: 60px
 }
+
 
 #author-container {
 	font-size: 25px;
+	margin: 0px;
+	text-align: center;
 }
 
 button {
@@ -22,29 +29,23 @@ button {
 	color: black;
 	border: 1px solid azure;
 	cursor: pointer;
-	position: fixed;
-	left: 50%;
-	top: 200px;
-	transform: translateX(-50%);
 	border-radius: 50%;
-	animation-duration: 1s;
-	animation-timing-function: ease-in-out;
-	
+	text-align: center;
+	position: relative;
+	left: 50%;
 }
 
-@keyframes bounce {
-	0% { top: 200px;}
-	50% {top: 500px;}
-	100% {top:200px;}
+.btn-container {
+	margin-top: 50px;
 }
-
-
 
 h1 {
 	text-align: center;
+	width: 100%;
+	font-size: 50px;
 }
 
-
+/*styling twitter btn*/
 .fa-twitter-square {
 	padding: 5px;
 	border-radius: 5px;
@@ -52,10 +53,10 @@ h1 {
 	margin-left: 10px
 }
 
+/*remove the underlines of links*/
 a:visited, a:link, a:active {
 	text-decoration: none;
 	color: azure;
-	
 }
 
 

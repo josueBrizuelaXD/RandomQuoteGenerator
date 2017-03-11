@@ -1,81 +1,91 @@
 <!DOCTYPE html>
 
 <html>
-	
+
 	<head>
 		<title>Random Quote Machine</title>
-	<link href="style.css" rel="stylesheet">
-	<link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<!--Link own stylesheet -->
+		<link href="style.css" rel="stylesheet">
+		<!--Link font-awsome stylesheet -->
+		<link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
 	</head>
-	
-<body>
-	<h1>Random Quote Machine</h1>
-	
-	<div id="demo">
-		<blockquote id="quoteContainer">&#34;Click the button to get  a quote&#34;</blockquote>
-		<blockquote id="author-container"></blockquote>
-		
-		<button  class = "fa fa-quote-left" onclick="createJSONP()"></button>
-		
-		
-		<a id="t-link" href="https://twitter.com/intent/tweet?text=Click%20the%20button%20to%20get%20a%20quote"
-		   target ="_blank"><i class="fa fa-twitter-square" style="font-size:15px"> Tweet</i></a>
-		
-		
-		<script src="jQuery-3.1.1.js"></script>
-		
-		
-	
-			<script type="text/javascript">
-				
-			function parseQuote(response) {
-					console.log(response);
-				console.log(response.quoteText);
-				
-				
-				var quote = document.getElementById("quoteContainer");
-				var lblE = document.getElementById("author-container");
-				
-				var twitterLink = document.getElementById("t-link")
-				var att = twitterLink.getAttributeNode("href");
-att.value = 'https://twitter.com/intent/tweet?text=' + '"' + response.quoteText + '"' + ' - '  + response.quoteAuthor;
-				
-				console.log(twitterLink);
-				console.log(att.value);
-				
-				quote.innerHTML = "&#34;" + response.quoteText + "&#34;";
-				
-				lblE.innerHTML = " -" + response.quoteAuthor;
-				
-				}
-			</script>
+
+	<body>
+		<h1>Random Quote Machine</h1>
+
+		<div>
+			<blockquote id="quoteContainer">&#34;click the button to get inspired&#34;</blockquote>
+			<blockquote id="author-container"></blockquote>
+
+			<div class="btn-container">
+			<button  class="fa fa-quote-left"></button>
+			</div>
 			
+
+
+			<div id ="link-container">
+			<a id="twitter-link" href="https://twitter.com/intent/tweet?text=click%20the%20button%20to%20get%20inspired%20"
+			   target ="_blank"><i class="fa fa-twitter-square" style="font-size:15px"> Tweet</i></a>
+			</div>
+			
+
+		</div>
+			<script src="jQuery-3.1.1.js"></script>
+
 			<script>
-				function createJSONP() {
+				//send a JSONP request
+				$("button").click(function() {
 					
+					//hide elements with an animation
+					$("#quoteContainer, #author-container, button").hide("fast");
+					
+								
+					
+                  //get the button pressed to send the request
 					var btn = document.querySelector("div > button");
-					console.log("element is " + btn);
-					
-					
-					
+					//create script with the jsonp request to be sent
 					var s = document.createElement("script");
+					//specify the link where the request is going to be sent
 					s.src = "http://api.forismatic.com/api/1.0/?method=getQuote&format=jsonp&jsonp=parseQuote&lang=en";
-					
-					var scr = document.scripts;
-					console.log(scr);
-					
+
+					//append the script to the body and then erase it immediately after the request has been sent
 					document.body.appendChild(s);
-					console.log(document.body);
 					s.parentNode.removeChild(s);
-					
-				}
+				});
 				
 			</script>
-			
-			
 		
-		
-	
-	</body>
-	
-</html>
+		<script type="text/javascript">
+//function called when we received a response from server
+		function parseQuote(response) {
+			//show the alements back
+			$("#quoteContainer, #author-container").slideDown("slow");
+			$("button").show("slow");
+			var quoteAuthor = "";
+			if (response.quoteAuthor == "") {
+				quoteAuthor = "Unknown";
+			} else {
+				quoteAuthor = response.quoteAuthor;
+			}
+			
+			//grab the quote and author containers tp display the new content
+			var quoteContainer = document.getElementById("quoteContainer");
+			var authorContainer = document.getElementById("author-container");
+
+			//get the twitter link to change its content
+			var twitterLink = document.getElementById("twitter-link")
+			
+			//get the twitter link attribute node
+			var attNode = twitterLink.getAttributeNode("href");
+			//change its content
+			attNode.value = 'https://twitter.com/intent/tweet?text=' + '"' + response.quoteText + '"' + ' - '  + quoteAuthor;
+			//display the new content on the screen
+			quoteContainer.innerHTML = "&#34;" + response.quoteText + "&#34;";
+			authorContainer.innerHTML = " -" + quoteAuthor;
+
+		}
+			</script>
+
+			</body>
+
+		</html>
